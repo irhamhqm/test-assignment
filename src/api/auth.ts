@@ -1,4 +1,4 @@
-import { API_URL } from "@/constants";
+import { API_URL, STG_API_URL } from "@/constants";
 import axios from "axios";
 
 export interface RegisterAndBuyNubPayload {
@@ -42,6 +42,17 @@ export interface RegisterAndBuyNubResponse {
   };
 }
 
+export interface LoginPayload {
+  whatsapp: string;
+  password: string;
+}
+
+export interface LoginResponse {
+  status: boolean;
+  message: string;
+  data: object;
+}
+
 export const registerAndBuyNub: (
   payload: RegisterAndBuyNubPayload
 ) => Promise<RegisterAndBuyNubResponse> = async (
@@ -57,9 +68,21 @@ export const registerAndBuyNub: (
     whatsapp: `0${payload.whatsapp}`,
   };
   const response = await axios.post(
-    `https://api-staging.friandy.web.id/api/customer/register`,
+    `${STG_API_URL}/api/customer/register`,
     formattedPayload
   );
 
   return response.data;
 };
+
+export const login: (payload: LoginPayload) => Promise<LoginResponse> = async (
+  payload
+) => {
+  const response = await axios.post(
+    `${STG_API_URL}/api/customer/login`,
+    payload
+  );
+  return response.data;
+};
+
+export const logout: () => Promise<unknown> = async () => {};

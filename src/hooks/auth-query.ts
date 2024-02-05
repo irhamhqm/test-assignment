@@ -1,6 +1,11 @@
-import { RegisterAndBuyNubPayload, registerAndBuyNub } from "@/api/auth";
+import {
+  LoginPayload,
+  RegisterAndBuyNubPayload,
+  login,
+  logout,
+  registerAndBuyNub,
+} from "@/api/auth";
 import { useMutation } from "@tanstack/react-query";
-import { redirect } from "next/navigation";
 
 export const useRegisterAndBuyNub = () => {
   return useMutation({
@@ -8,7 +13,29 @@ export const useRegisterAndBuyNub = () => {
       registerAndBuyNub(payload),
     mutationKey: ["register-and-buy-nub"],
     onSuccess: ({ data }) => {
-      redirect(data.transaction.data.payment_url);
+      // might need better alternative
+      window.location.assign(data.transaction.data.payment_url);
+    },
+  });
+};
+
+export const useLogin = () => {
+  return useMutation({
+    mutationFn: (payload: LoginPayload) => login(payload),
+    mutationKey: ["login"],
+    onSuccess: ({ data }) => {
+      console.log(data);
+      // do something, redirect and save access token
+    },
+  });
+};
+
+export const useLogout = () => {
+  return useMutation({
+    mutationFn: () => logout(),
+    mutationKey: ["logout"],
+    onSuccess: () => {
+      // do something, logout
     },
   });
 };

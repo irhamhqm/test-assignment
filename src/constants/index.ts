@@ -1,4 +1,5 @@
 export const API_URL = process.env.NEXT_PUBLIC_API_URL || "";
+export const STG_API_URL = process.env.NEXT_PUBLIC_STG_API_URL || "";
 
 export const PROFESSIONS = [
   { id: 0, name: "Aparatur Sipil Negara (ASN)" },

@@ -14,6 +14,17 @@ import { useRegisterAndBuyNub } from "@/hooks/auth-query";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import * as yup from "yup";
+import Image from "next/image";
+import MainLayout from "@/components/layout/MainLayout";
+import Link from "next/link";
+
+import {
+  CreditCardIcon,
+  DeviceTabletIcon,
+  EnvelopeIcon,
+  LockOpenIcon,
+  UserCircleIcon,
+} from "@heroicons/react/16/solid";
 
 type FormData = {
   id_number?: string;
@@ -50,7 +61,7 @@ const schema = yup
       .min(8, "Password minimal 8 karakter."),
     password_confirmation: yup
       .string()
-      .required("Konfirmasi password tidak valid")
+      .required("Konfirmasi password tidak boleh kosong.")
       .min(8, "Password minimal 8 karakter.")
       .oneOf([yup.ref("password")], "Password harus sama."),
   })
@@ -80,6 +91,7 @@ const FormBuyNub = () => {
         password_confirmation: "",
       },
       resolver: yupResolver(schema),
+      mode: "onBlur",
     });
   const provinces = useGetProvinces();
   const citiesById = useGetCitiesByProvinceId({ id: watch("province_id") });
@@ -98,7 +110,7 @@ const FormBuyNub = () => {
   };
 
   return (
-    <div className="bg-[#f7fafc] rounded-md mt-14 p-12 w-[540px] mx-auto">
+    <div className="bg-[#f7fafc] rounded-md mt-14 p-12 lg:px-[15px] w-[540px] mx-auto">
       <FormProvider
         register={register}
         handleSubmit={handleSubmit}
@@ -111,7 +123,13 @@ const FormBuyNub = () => {
             Daftar
           </div>
           <div className="text-center text-text-muted text-xs mt-2 mb-6">
-            Silahkan login jika sudah memiliki akun di sini
+            Silahkan login jika sudah memiliki akun{" "}
+            <Link
+              className="text-[#287d3e]"
+              href="/login"
+            >
+              di sini
+            </Link>
           </div>
           <div className="pt-2 pb-1 mb-3 bg-[#ced4da] text-center text-[#212529]  h-11">
             Data Diri
@@ -123,6 +141,15 @@ const FormBuyNub = () => {
             label="No. KTP"
             placeholder="No. KTP"
             name="id_number"
+            icon={<CreditCardIcon />}
+            type="number"
+            registerOption={{
+              valueAsNumber: true,
+              pattern: {
+                value:
+                  /^(?:0\.(?:0[0-9]|[0-9]\d?)|[0-9]\d*(?:\.\d{1,2})?)(?:e[+-]?\d+)?$/,
+              },
+            }}
           />
           <FormTextInput
             containerClass={containerClass}
@@ -131,6 +158,7 @@ const FormBuyNub = () => {
             label="Nama (Sesuai KTP)"
             placeholder="Nama"
             name="name"
+            icon={<UserCircleIcon />}
             isRequired
           />
           <FormTextInput
@@ -140,6 +168,7 @@ const FormBuyNub = () => {
             label="Email"
             placeholder="Email"
             name="email"
+            icon={<EnvelopeIcon />}
           />
           <FormSelectInput
             containerClass={containerClass}
@@ -233,6 +262,7 @@ const FormBuyNub = () => {
             name="whatsapp"
             isRequired
             type="number"
+            icon={<DeviceTabletIcon />}
             registerOption={{
               valueAsNumber: true,
               pattern: {
@@ -242,16 +272,17 @@ const FormBuyNub = () => {
             }}
           />
           <FormTextInput
-            containerClass={containerClass}
+            containerClass="mb-2"
             labelClass={labelClass}
             inputClass={textInputClass}
             label="Password"
             placeholder="Password"
             name="password"
             type="password"
+            icon={<LockOpenIcon />}
             isRequired
           />
-          <div className="text-[#8898aa] text-xs">
+          <div className="text-[#8898aa] text-xs mb-6">
             Password minimal 8 karakter.
           </div>
           <FormTextInput
@@ -262,15 +293,26 @@ const FormBuyNub = () => {
             placeholder="Konfirmasi Password"
             name="password_confirmation"
             type="password"
+            icon={<LockOpenIcon />}
             isRequired
           />
-          <button
-            type="submit"
-            value="Submit"
-            className="bg-[#287d3e] block px-5 py-[10px] text-white font-semibold text-sm mx-auto rounded-[4px] shadow-md"
-          >
-            Buat Akun
-          </button>
+          {registerAndBuyNub.isPending ? (
+            <Image
+              className="block mx-auto"
+              src={"./spinner.svg"}
+              width={50}
+              height={50}
+              alt="loading..."
+            />
+          ) : (
+            <button
+              type="submit"
+              value="Submit"
+              className="bg-[#287d3e] block px-5 py-[10px] text-white font-semibold text-sm mx-auto rounded-[4px] shadow-md"
+            >
+              Buat Akun
+            </button>
+          )}
         </form>
       </FormProvider>
     </div>
@@ -279,11 +321,10 @@ const FormBuyNub = () => {
 
 export default function RegisterPage() {
   return (
-    <div>
-      <Navbar />
+    <MainLayout>
       <Container>
         <FormBuyNub />
       </Container>
-    </div>
+    </MainLayout>
   );
 }
