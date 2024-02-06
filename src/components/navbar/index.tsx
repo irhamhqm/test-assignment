@@ -37,7 +37,7 @@ export default function Navbar() {
             </Link>
           </div>
           <div className="flex lg:hidden mt-0 ml-auto w-[30px] h-[30px] justify-center items-center">
-            <Bars3Icon />
+            <Bars3Icon color="white" />
           </div>
         </div>
       </Container>

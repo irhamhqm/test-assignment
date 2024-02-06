@@ -1,7 +1,6 @@
 import Container from "@/components/commons/container";
 import FormTextInput from "@/components/commons/form/TextInput";
 import MainLayout from "@/components/layout/MainLayout";
-import Navbar from "@/components/navbar";
 import { useLogin } from "@/hooks/auth-query";
 import { DeviceTabletIcon, LockOpenIcon } from "@heroicons/react/16/solid";
 import { yupResolver } from "@hookform/resolvers/yup";

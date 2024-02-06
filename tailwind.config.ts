@@ -17,6 +17,11 @@ const config: Config = {
         "brand-blue": "#32325d",
         "text-muted": "#8898aa!important",
       },
+      screens: {
+        "3xs": "320px",
+        "2xs": "375px",
+        xs: "425px",
+      },
     },
   },
   plugins: [],

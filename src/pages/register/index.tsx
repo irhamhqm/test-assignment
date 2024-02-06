@@ -110,7 +110,7 @@ const FormBuyNub = () => {
   };
 
   return (
-    <div className="bg-[#f7fafc] rounded-md mt-14 p-12 lg:px-[15px] w-[540px] mx-auto">
+    <div className="bg-[#f7fafc] rounded-md mt-14 p-12 lg:px-[15px] 3xs:w-72 2xs:w-[21.5rem] xs:w-96 md:w-[540px] mx-auto">
       <FormProvider
         register={register}
         handleSubmit={handleSubmit}
