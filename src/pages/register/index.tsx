@@ -26,6 +26,7 @@ import {
 } from "@heroicons/react/16/solid";
 import { NextPageWithLayout } from "../_app";
 import { ReactElement } from "react";
+import axios from "axios";
 
 type FormData = {
   id_number?: string;
@@ -295,7 +296,7 @@ const RegisterPage: NextPageWithLayout = () => {
             icon={<LockOpenIcon />}
             isRequired
           />
-          {registerAndBuyNub.error && (
+          {axios.isAxiosError(registerAndBuyNub.error) && (
             <span className="block text-red-500 mt-2 mb-6">
               {registerAndBuyNub.error?.response?.data?.message}
             </span>
