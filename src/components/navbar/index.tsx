@@ -42,25 +42,25 @@ export default function Navbar() {
           <div
             className={`${
               open
-                ? "flex flex-col w-full"
+                ? "flex flex-col w-full text-[#172b4d] font-medium"
                 : "hidden lg:flex mt-0 ml-auto items-center justify-center text-white text-sm leading-normal"
             } `}
           >
             <Link
               href="/"
-              className="p-4 text-[#172b4d] text-sm font-medium"
+              className={`${open ? "py-4" : "p-4"}`}
             >
               Beranda
             </Link>
             <Link
               href="/login"
-              className="p-4 text-[#172b4d] text-sm font-medium"
+              className={`${open ? "py-4" : "p-4"}`}
             >
               Login
             </Link>
             <Link
               href="/register"
-              className="p-4 text-[#172b4d] text-sm font-medium"
+              className={`${open ? "py-4" : "p-4"}`}
             >
               Daftar
             </Link>

@@ -112,7 +112,7 @@ const RegisterPage: NextPageWithLayout = () => {
   };
 
   return (
-    <div className="bg-[#f7fafc] rounded-md mt-14 p-12 lg:px-[15px] 3xs:w-72 2xs:w-[21.5rem] xs:w-96 md:w-[540px] mx-auto mb-20">
+    <div className="bg-[#f7fafc] rounded-md mt-14 p-4 sm:p-12 3xs:w-72 2xs:w-[21.5rem] xs:w-96 md:w-[540px] mx-auto mb-20">
       <FormProvider
         register={register}
         handleSubmit={handleSubmit}

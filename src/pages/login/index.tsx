@@ -48,7 +48,7 @@ const LoginPage: NextPageWithLayout = () => {
 
   return (
     <div className="flex flex-col mx-auto lg:px-[15px] pb-12">
-      <div className="bg-[#f7fafc] rounded-md mt-14 p-12 w-[540px] mx-auto">
+      <div className="bg-[#f7fafc] rounded-md 3xs:w-72 2xs:w-[21.5rem] xs:w-96 md:w-[540px] mt-14 p-4 sm:p-12 w-[540px] mx-auto">
         <div className="text-sm text-[#8898aa] text-center mb-6">Login</div>
         <FormProvider
           register={register}
