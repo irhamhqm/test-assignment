@@ -106,6 +106,9 @@ export const login: (payload: LoginPayload) => Promise<LoginResponse> = async (
   const response = await axios.post(
     `${STG_API_URL}/api/customer/login`,
     payload
+    // {
+    //   withCredentials: true,
+    // }
   );
   return response.data;
 };
@@ -120,6 +123,7 @@ export const logout: (payload: LogoutPayload) => Promise<unknown> = async (
       headers: {
         Authorization: `Bearer ${payload.token}`,
       },
+      // withCredentials: true,
     }
   );
 
