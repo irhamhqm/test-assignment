@@ -1,7 +1,6 @@
 import Container from "@/components/commons/container";
 import FormSelectInput from "@/components/commons/form/SelectInput";
 import FormTextInput from "@/components/commons/form/TextInput";
-import Navbar from "@/components/navbar";
 import { PROFESSIONS } from "@/constants";
 import {
   useGetProvinces,
@@ -146,7 +145,6 @@ const RegisterPage: NextPageWithLayout = () => {
             icon={<CreditCardIcon />}
             type="number"
             registerOption={{
-              valueAsNumber: true,
               pattern: {
                 value:
                   /^(?:0\.(?:0[0-9]|[0-9]\d?)|[0-9]\d*(?:\.\d{1,2})?)(?:e[+-]?\d+)?$/,
@@ -266,7 +264,6 @@ const RegisterPage: NextPageWithLayout = () => {
             type="number"
             icon={<DeviceTabletIcon />}
             registerOption={{
-              valueAsNumber: true,
               pattern: {
                 value:
                   /^(?:0\.(?:0[0-9]|[0-9]\d?)|[0-9]\d*(?:\.\d{1,2})?)(?:e[+-]?\d+)?$/,
@@ -298,6 +295,11 @@ const RegisterPage: NextPageWithLayout = () => {
             icon={<LockOpenIcon />}
             isRequired
           />
+          {registerAndBuyNub.error && (
+            <span className="block text-red-500 mt-2 mb-6">
+              {registerAndBuyNub.error?.response?.data?.message}
+            </span>
+          )}
           {registerAndBuyNub.isPending ? (
             <Image
               className="block mx-auto"

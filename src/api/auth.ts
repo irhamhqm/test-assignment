@@ -85,6 +85,7 @@ export const registerAndBuyNub: (
 ) => {
   let formattedPayload = {
     ...payload,
+    id_number: payload.id_number || "",
     province_id: Number(payload.province_id),
     city_id: Number(payload.city_id),
     sales_id: Number(payload.sales_id),
