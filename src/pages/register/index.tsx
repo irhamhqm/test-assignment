@@ -25,6 +25,8 @@ import {
   LockOpenIcon,
   UserCircleIcon,
 } from "@heroicons/react/16/solid";
+import { NextPageWithLayout } from "../_app";
+import { ReactElement } from "react";
 
 type FormData = {
   id_number?: string;
@@ -72,7 +74,7 @@ const labelClass = "mb-2 text-[#212529]";
 const textInputClass = "px-2.5 py-3 text-[#8898aa] shadow-md";
 const selectInputClass = "px-2.5 py-3 border border-gray";
 
-const FormBuyNub = () => {
+const RegisterPage: NextPageWithLayout = () => {
   const { register, handleSubmit, formState, watch, ...rest } =
     useForm<FormData>({
       defaultValues: {
@@ -110,7 +112,7 @@ const FormBuyNub = () => {
   };
 
   return (
-    <div className="bg-[#f7fafc] rounded-md mt-14 p-12 lg:px-[15px] 3xs:w-72 2xs:w-[21.5rem] xs:w-96 md:w-[540px] mx-auto">
+    <div className="bg-[#f7fafc] rounded-md mt-14 p-12 lg:px-[15px] 3xs:w-72 2xs:w-[21.5rem] xs:w-96 md:w-[540px] mx-auto mb-20">
       <FormProvider
         register={register}
         handleSubmit={handleSubmit}
@@ -319,12 +321,12 @@ const FormBuyNub = () => {
   );
 };
 
-export default function RegisterPage() {
+RegisterPage.getLayout = function getLayout(page: ReactElement) {
   return (
     <MainLayout>
-      <Container>
-        <FormBuyNub />
-      </Container>
+      <Container>{page}</Container>
     </MainLayout>
   );
-}
+};
+
+export default RegisterPage;

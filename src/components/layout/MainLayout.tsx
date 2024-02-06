@@ -1,10 +1,10 @@
-import { ReactNode, useCallback, useState } from "react";
+import { ReactNode, useState } from "react";
 
-import AuthContext from "@/context/auth";
-
-import RouteGuard from "../routeGuard";
+import RouteGuard from "../routeGuard"; // bug
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Navbar from "../navbar";
+import WhatsappPlugin from "../whatsapp-plugin";
+import { AuthContextProvider } from "@/context/auth";
 
 type MainLayoutProps = {
   children: ReactNode;
@@ -19,22 +19,17 @@ const queryClient = new QueryClient({
 });
 
 export default function MainLayout({ children }: MainLayoutProps) {
-  const [accessToken, setAccessTokenState] = useState<string>("");
-
-  const setAccessToken = useCallback((token: string) => {
-    setAccessTokenState(token);
-  }, []);
-
   return (
-    <AuthContext.Provider value={{ accessToken, setAccessToken }}>
+    <AuthContextProvider>
       <QueryClientProvider client={queryClient}>
         <RouteGuard>
           <>
             <Navbar />
             <>{children}</>
+            <WhatsappPlugin />
           </>
         </RouteGuard>
       </QueryClientProvider>
-    </AuthContext.Provider>
+    </AuthContextProvider>
   );
 }

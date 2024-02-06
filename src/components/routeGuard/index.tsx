@@ -1,12 +1,6 @@
-import {
-  useState,
-  useEffect,
-  ReactNode,
-  useContext,
-  ReactElement,
-} from "react";
+import { useState, useEffect, ReactElement } from "react";
 import { useRouter } from "next/router";
-import AuthContext from "@/context/auth";
+import { useAuthContext } from "@/context/auth";
 
 type RouteGuardProps = {
   children: ReactElement;
@@ -14,7 +8,7 @@ type RouteGuardProps = {
 
 function RouteGuard({ children }: RouteGuardProps): ReactElement {
   const router = useRouter();
-  const { accessToken } = useContext(AuthContext);
+  const { accessToken } = useAuthContext();
   const [authorized, setAuthorized] = useState(false);
 
   useEffect(() => {
@@ -25,7 +19,6 @@ function RouteGuard({ children }: RouteGuardProps): ReactElement {
         setAuthorized(false);
         router.push({
           pathname: "/login",
-          // query: { returnUrl: router.asPath }
         });
       } else {
         setAuthorized(true);
@@ -45,7 +38,7 @@ function RouteGuard({ children }: RouteGuardProps): ReactElement {
 
   if (authorized) return children;
 
-  return <div className="xl:flex min-h-[calc(100vh-190px)]">test</div>;
+  return <div></div>;
 }
 
 export default RouteGuard;

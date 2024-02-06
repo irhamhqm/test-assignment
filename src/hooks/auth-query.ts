@@ -5,6 +5,7 @@ import {
   logout,
   registerAndBuyNub,
 } from "@/api/auth";
+import { useAuthContext } from "@/context/auth";
 import { useMutation } from "@tanstack/react-query";
 
 export const useRegisterAndBuyNub = () => {
@@ -20,22 +21,25 @@ export const useRegisterAndBuyNub = () => {
 };
 
 export const useLogin = () => {
+  const { setAccessToken } = useAuthContext();
   return useMutation({
     mutationFn: (payload: LoginPayload) => login(payload),
     mutationKey: ["login"],
     onSuccess: ({ data }) => {
-      console.log(data);
       // do something, redirect and save access token
+      setAccessToken(data.token);
     },
   });
 };
 
 export const useLogout = () => {
+  const { accessToken, setAccessToken } = useAuthContext();
   return useMutation({
-    mutationFn: () => logout(),
+    mutationFn: () => logout({ token: accessToken }),
     mutationKey: ["logout"],
     onSuccess: () => {
       // do something, logout
+      setAccessToken("");
     },
   });
 };

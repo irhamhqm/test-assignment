@@ -1,14 +1,19 @@
 import MainLayout from "@/components/layout/MainLayout";
-import { Inter } from "next/font/google";
+import { useLogout } from "@/hooks/auth-query";
+import { NextPageWithLayout } from "./_app";
+import { ReactElement } from "react";
 
-const inter = Inter({ subsets: ["latin"] });
-
-export default function Home() {
+const HomePage: NextPageWithLayout = () => {
+  const logout = useLogout();
   return (
-    <MainLayout>
-      <div>
-        <button onClick={() => null}>Logout</button>
-      </div>
-    </MainLayout>
+    <div>
+      <button onClick={() => logout.mutate()}>Logout</button>
+    </div>
   );
-}
+};
+
+HomePage.getLayout = function getLayout(page: ReactElement) {
+  return <MainLayout>{page}</MainLayout>;
+};
+
+export default HomePage;

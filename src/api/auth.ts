@@ -50,7 +50,32 @@ export interface LoginPayload {
 export interface LoginResponse {
   status: boolean;
   message: string;
-  data: object;
+  data: {
+    id: number;
+    id_number?: string;
+    name: string;
+    whatsapp: string;
+    profession?: string;
+    email?: string;
+    token: string;
+    is_active: number;
+    updated_at: string;
+    is_akad: boolean;
+    is_serah_terima: boolean;
+    booking_projects: any[]; // need fix
+    city: {
+      id: number;
+      name: string;
+    };
+    province: {
+      id: number;
+      name: string;
+    };
+  };
+}
+
+export interface LogoutPayload {
+  token: string;
 }
 
 export const registerAndBuyNub: (
@@ -85,4 +110,18 @@ export const login: (payload: LoginPayload) => Promise<LoginResponse> = async (
   return response.data;
 };
 
-export const logout: () => Promise<unknown> = async () => {};
+export const logout: (payload: LogoutPayload) => Promise<unknown> = async (
+  payload
+) => {
+  const response = await axios.post(
+    `${STG_API_URL}/api/customer/logout`,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${payload.token}`,
+      },
+    }
+  );
+
+  return response.data;
+};

@@ -1,12 +1,17 @@
 import Container from "@/components/commons/container";
 import FormTextInput from "@/components/commons/form/TextInput";
 import MainLayout from "@/components/layout/MainLayout";
+import { useAuthContext } from "@/context/auth";
 import { useLogin } from "@/hooks/auth-query";
 import { DeviceTabletIcon, LockOpenIcon } from "@heroicons/react/16/solid";
 import { yupResolver } from "@hookform/resolvers/yup";
+import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { FormProvider, useForm } from "react-hook-form";
 import * as yup from "yup";
+import { NextPageWithLayout } from "../_app";
+import { ReactElement } from "react";
 
 type FormData = {
   whatsapp: string;
@@ -23,7 +28,9 @@ const schema = yup
 const containerClass = "mb-6";
 const textInputClass = "px-2.5 py-3 text-[#8898aa] shadow-md";
 
-const LoginForm = () => {
+const LoginPage: NextPageWithLayout = () => {
+  const router = useRouter();
+  const { accessToken } = useAuthContext();
   const { register, handleSubmit, ...rest } = useForm<FormData>({
     defaultValues: {
       whatsapp: "",
@@ -66,13 +73,23 @@ const LoginForm = () => {
               type="password"
               icon={<LockOpenIcon />}
             />
-            <button
-              type="submit"
-              value="Submit"
-              className="bg-[#287d3e] block px-5 py-[10px] text-white font-semibold text-sm mx-auto rounded-[4px] shadow-md"
-            >
-              Masuk
-            </button>
+            {login.isPending ? (
+              <Image
+                className="block mx-auto"
+                src={"./spinner.svg"}
+                width={50}
+                height={50}
+                alt="loading..."
+              />
+            ) : (
+              <button
+                type="submit"
+                value="Submit"
+                className="bg-[#287d3e] block px-5 py-[10px] text-white font-semibold text-sm mx-auto rounded-[4px] shadow-md"
+              >
+                Masuk
+              </button>
+            )}
           </form>
         </FormProvider>
       </div>
@@ -86,12 +103,12 @@ const LoginForm = () => {
   );
 };
 
-export default function LoginPage() {
+LoginPage.getLayout = function getLayout(page: ReactElement) {
   return (
     <MainLayout>
-      <Container>
-        <LoginForm />
-      </Container>
+      <Container>{page}</Container>
     </MainLayout>
   );
-}
+};
+
+export default LoginPage;
